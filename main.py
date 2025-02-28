@@ -1,36 +1,36 @@
-import discord,os
+import discord,os,comando as c
+from discord.ext import commands
 from dotenv import load_dotenv
-import comando as c
-
 
 load_dotenv()
-token = os.getenv("dt")
-
-# La variable intents almacena los privilegios del bot
+TOKEN = os.getenv("dt")
 intents = discord.Intents.default()
-# Activar el privilegio de lectura de mensajes
 intents.message_content = True
-# Crear un bot en la variable cliente y transferirle los privilegios
-client = discord.Client(intents=intents)
 
-@client.event
+bot = commands.Bot(command_prefix='()', intents=intents)
+
+@bot.event
 async def on_ready():
-    print(f'Hemos iniciado sesión como {client.user}')
+    print(f'We have logged in as {bot.user}')
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-    if message.content.startswith('$hello'):
-        await message.channel.send("Hi!")
-    elif message.content.startswith('$bye'):
-        await message.channel.send("\U0001f642")
-    elif message.content.startswith('-elbicho'):
-        await message.channel.send("SIUUUUUUU!!!")
-    elif message.content.startswith('-contraseña'):
-        item = c.contra(25)
-        await message.channel.send(f"Tu contraseñña es: {item}")
-    else:
-        await message.channel.send(message.content)
+@bot.command()
+async def hello(ctx):
+    await ctx.send(f'Hola, soy un bot {bot.user}!')
 
-client.run(token)
+@bot.command()
+async def heh(ctx, count_heh = 5):
+    await ctx.send("he" * count_heh)
+
+@bot.command (name="psw")
+async def pasword(ctx,largo = 25):
+    x = c.contra(largo) 
+    await ctx.send(f"🔐Contraseña generada: {x}")
+    
+@bot.command (name="coin")
+async def flip(ctx):
+    x = c.flipcoin() 
+    await ctx.send(f"🪙ELECCION : {x}")
+
+
+
+bot.run (TOKEN)

@@ -8,3 +8,7 @@ def contra (Lenght):
     for i in range (Lenght):
         Pasword += r.choice(Elements)
     return Pasword   
+
+def flipcoin():
+    coin = ["Cara","Sello"]
+    return r.choice (coin)
