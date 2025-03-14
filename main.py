@@ -1,4 +1,4 @@
-import discord,os,comando as c
+import discord,os,comando as c, comandapi as sapi,ambiente as am
 from discord.ext import commands
 from dotenv import load_dotenv
 
@@ -31,6 +31,23 @@ async def flip(ctx):
     x = c.flipcoin() 
     await ctx.send(f"🪙ELECCION : {x}")
 
+@bot.command (name="img")
+async def meme(ctx):
+    url = c.meme()
+    await ctx.send(file=url)
+
+@bot.command (name="imgs")
+async def memes(ctx):
+    url = c.memes()
+    await ctx.send(file=url)
+@bot.command(name = "patos")
+async def duck(ctx):
+    image_url = sapi.get_duck_image()
+    await ctx.send(image_url)
+
+@bot.command(name="eco")
+async def eco(ctx):
+    await ctx.send(embed=am.etiqueta_reciclaje())
 
 
 bot.run (TOKEN)
